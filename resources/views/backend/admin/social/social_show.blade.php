@@ -1,0 +1,84 @@
+@extends('backend.admin.master')
+
+@section('heading', 'Social Icon Show')
+@section('button')
+                        <a href="{{route('SocialIconCreate')}}" class="btn btn-primary"><i class="fas fa-plus"></i> Add</a>
+@endsection
+ @section('content')
+
+<div class="section-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="example1">
+                                            <thead>
+                                            <tr>
+                                                <th>SL</th>
+                                                <th>Preview</th>
+                                                <th>Url</th>
+                                                <th>Icon</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($socialIcon as $row)
+                                            <tr>
+                                                <td>{{$loop->iteration}}</td>
+                                                   <td><i class="{{$row->icon}}" style="font-size: 30px"></td>
+                                                   <td>{{$row->icon}}</td>
+                                                   <td>{{$row->url}}</td>
+                                                     <td class="pt_10 pb_10">
+                                                     <a href="{{ route('SocialIconEdit',$row->id)}}" class="btn btn-primary" >Edit</a>
+                                                     <a href="{{route('SocialIconDelete',$row->id)}}" class="btn btn-danger" onClick="return confirm('Are you sure?');">Delete</a>
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+          @if($errors->any())
+    @foreach($errors->all() as $error)
+    <script>    
+    iziToast.error({
+    title: '',
+     position: 'topRight',
+    message: '{{$error}}',
+            });
+            </script>
+            @endforeach
+           
+        
+    @elseif(session()->get('error'))
+    <script>
+        iziToast.error({
+    title: '',
+     position: 'topRight',
+    message: '{{session()->get('error')}}',
+});
+</script>
+
+    
+        @else(session()->get('success'))
+        <script>
+        iziToast.success({
+    title: '',
+     position: 'topRight',
+    message: '{{session()->get('success')}}',
+});
+    </script>
+    
+    @endif
+    
+    
+
+
+@endsection
